@@ -13,7 +13,7 @@ AM_CFLAGS = ${my_CFLAGS} \
 	-ffunction-sections \
 	-fdata-sections
 
-AM_LDFLAGS = \
+AM_LDXXFLAGS = \
 	-Wl,--gc-sections \
 	-Wl,--as-needed
 
@@ -33,16 +33,15 @@ LIBABC_CURRENT=2
 LIBABC_REVISION=0
 LIBABC_AGE=2
 
-pkginclude_HEADERS = src/abc/libabc.h
+pkginclude_HEADERS = src/myClass.hpp
 lib_LTLIBRARIES = src/libabc.la
 
 src_libabc_la_SOURCES =\
-	src/libabc-private.h \
-	src/libabc.c
+        src/myClass.cpp
 
 EXTRA_DIST += src/libabc.sym
 
-src_libabc_la_LDFLAGS = $(AM_LDFLAGS) \
+src_libabc_la_LDXXFLAGS = $(AM_LDXXFLAGS) \
 	-version-info $(LIBABC_CURRENT):$(LIBABC_REVISION):$(LIBABC_AGE) \
 	-Wl,--version-script=$(top_srcdir)/src/libabc.sym
 src_libabc_la_DEPENDENCIES = ${top_srcdir}/src/libabc.sym
@@ -52,8 +51,8 @@ pkgconfig_DATA = src/libabc.pc
 EXTRA_DIST += src/libabc.pc.in
 CLEANFILES += src/libabc.pc
 
-TESTS = src/test-libabc
+TESTS = src/test-libabc-cpp
 
-check_PROGRAMS = src/test-libabc
-src_test_libabc_SOURCES = src/test-libabc.c
-src_test_libabc_LDADD = src/libabc.la
+check_PROGRAMS = src/test-libabc-cpp
+src_test_libabc_SOURCES = src/test-libabc.cpp
+src_test_libabc_LDXXADD = src/libabc.la
